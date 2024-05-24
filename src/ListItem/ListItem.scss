@@ -1,0 +1,34 @@
+.list-item {
+  // flex: 1 0 16%; // for 5 items in a row
+  flex: 1 0 0; // for 8 items in a row
+  list-style: none;
+  padding: 2rem 0.5rem;
+
+  button {
+    background-color: unset;
+    border: none;
+    cursor: pointer;
+    border: 1px solid transparent;
+    position: relative;
+
+    &.-selected { border: 1px solid red; }
+  }
+
+  button:hover + .list-item-label {
+    text-decoration: underline;
+  }
+
+  img {
+    width: 11rem;
+    height: auto;
+  }
+
+  .cross-overlay {
+    position: absolute;
+    opacity: 0;
+
+    &:hover { opacity: 0.3; }
+  }
+
+  .selected .cross-overlay { opacity: 0.6; }
+}
