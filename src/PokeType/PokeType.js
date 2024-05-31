@@ -3,8 +3,10 @@ import './PokeType.scss';
 
 function PokeType({ type }) {
   return (
-    <div className="poke-type" key={type.slot}>
-      <img className={type.type.name + ' icon'} alt={type.type.name} src={PokeTypeSvgs[type.type.name]}/>
+    <div>
+      <div className={type.type.name + ' icon poke-type'} key={type.slot}>
+        <img alt={type.type.name} src={PokeTypeSvgs[type.type.name]}/>
+      </div>
     </div>
   )
 }

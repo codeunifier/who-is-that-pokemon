@@ -6,13 +6,11 @@ import { getRandomizedList } from "./helper.service";
  * */
 const TOTAL_POKEMON_COUNT = 1025;
 
-// Number of pokemon to fetch
-const POKEMON_TO_FETCH = 24;
 
-export function fetchRandomPokemon() {
+export function fetchRandomPokemon(numToFetch) {
   const baseUrl = 'https://pokeapi.co/api/v2/pokemon/';
 
-  const randomPokemonIds = getRandomizedList(TOTAL_POKEMON_COUNT, POKEMON_TO_FETCH);
+  const randomPokemonIds = getRandomizedList(TOTAL_POKEMON_COUNT, numToFetch);
 
   const pokemonPromises = randomPokemonIds.map((id) => {
     return fetch(baseUrl + id).then((res) => res.json());

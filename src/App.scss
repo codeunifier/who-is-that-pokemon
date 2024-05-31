@@ -47,9 +47,24 @@
 
 .list {
   display: flex;
-  flex-wrap: wrap;  
+  flex-wrap: wrap;
+
+  &.row-3 .list-item { padding: 2rem 6rem; }
+  &.row-4 .list-item { padding: 2rem 4rem; }
+  &.row-5 .list-item { padding: 2rem 2rem; }
+  &.row-6 .list-item { padding: 2rem 1rem; }
 }
 
 .-hidden {
   display: none;
 }
+
+.settings-cont {
+  display: flex;
+  align-items: center;
+  margin: 0 auto 2rem auto;
+  justify-content: space-between;
+  width: 40%;
+}
+
+

@@ -2,7 +2,6 @@
   // flex: 1 0 16%; // for 5 items in a row
   flex: 1 0 0; // for 8 items in a row
   list-style: none;
-  padding: 2rem 0.5rem;
 
   button {
     background-color: unset;
@@ -18,7 +17,7 @@
     text-decoration: underline;
   }
 
-  img {
+  .item-img {
     width: 11rem;
     height: auto;
   }

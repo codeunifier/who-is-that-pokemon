@@ -8,6 +8,10 @@ function PokeTypeSwitch({ showTypes, setShowTypes }) {
 
   return (
     <div className="poke-type-switch">
+      <div className="poke-type-label">
+        {showTypes ? 'Hide' : 'Show'} Types
+      </div>
+      
       <div className="switch-cont">
         <label className="switch">
           <input type="checkbox" onClick={toggleShowTypes}/>
@@ -15,9 +19,6 @@ function PokeTypeSwitch({ showTypes, setShowTypes }) {
         </label>
       </div>
       
-      <div className="poke-type-label">
-        {showTypes ? 'Hide' : 'Show'} Types
-      </div>
     </div>
   )
 }

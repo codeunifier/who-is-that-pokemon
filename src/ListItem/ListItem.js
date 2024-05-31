@@ -20,8 +20,8 @@ function ListItem({ pokemon, showTypes }) {
   return (
     <li className='list-item'>
       <button onClick={handleClick} className={selected ? 'selected poke-btn' : 'poke-btn'}>
-        <img src={redXOverlay} className='cross-overlay' alt='overlay' />
-        <img src={pokemon.sprites.front_default} alt={pokemon.species.name} />
+        <img src={redXOverlay} className='item-img cross-overlay' alt='overlay' />
+        <img src={pokemon.sprites.front_default} className="item-img" alt={pokemon.species.name} />
         { showTypes ? <div className="types-cont">
           {pokemon.types.map((type) => <PokeType key={type.slot} type={type} />)}
         </div> : null }
