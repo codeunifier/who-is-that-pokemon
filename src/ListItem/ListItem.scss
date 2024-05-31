@@ -31,4 +31,15 @@
   }
 
   .selected .cross-overlay { opacity: 0.6; }
+
+  .poke-btn {
+    position: relative;
+
+    .types-cont {
+      position: absolute;
+      top: 0;
+      right: 0;
+      display: flex;
+    }
+  }
 }
