@@ -1,7 +1,7 @@
 import logo from './logo.svg';
 import './App.scss';
 import './assets/styles/_types.scss';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import { fetchRandomPokemon } from './services/pokemon.service';
 import ListItem from './ListItem/ListItem';
@@ -37,8 +37,8 @@ function App() {
       setNumPerRow(5);
     }
   }
-
-  function fetchPokemon(numToFetch = DEFAULT_POKEMON_TO_FETCH) {
+  
+  const fetchPokemon = useCallback(async (numToFetch = DEFAULT_POKEMON_TO_FETCH) => {
     fetchRandomPokemon(numToFetch).then((pokemon) => {
       calculateNumPerRow(numToFetch);
       setLoading(false);
@@ -47,7 +47,7 @@ function App() {
       setError(err);
       setLoading(false);
     });
-  }
+  }, []);
 
   useEffect(() => {
     setTimeout(() => {
