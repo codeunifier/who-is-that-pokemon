@@ -13,6 +13,7 @@ import SoundSlider from './SoundSlider/SoundSlider';
 
 const DEFAULT_LOADING_TIME = 2000;
 const DEFAULT_POKEMON_TO_FETCH = 24;
+const DEFAULT_SOUND_VOLUME = .3;
 
 function App() {
   const [list, setList] = useState([]);
@@ -22,7 +23,7 @@ function App() {
   const [showTypes, setShowTypes] = useState(false);
   const [numPerRow, setNumPerRow] = useState(6);
   const [playSounds, setPlaySounds] = useState(true);
-  const [soundVolume, setSoundVolume] = useState(.3);
+  const [soundVolume, setSoundVolume] = useState(DEFAULT_SOUND_VOLUME);
 
   function calculateNumPerRow(numToFetch) {
     // calculate the number of pokemon per row to evenly space out the number of pokemon fetched
@@ -63,6 +64,11 @@ function App() {
     }
   }, [list, fetchPokemon]);
 
+  const toggleSoundState = (state) => {
+    setPlaySounds(state);
+    setSoundVolume(state ? DEFAULT_SOUND_VOLUME : 0);
+  };
+
   return (
     <div className="App no-box-shadow">
       <div className="App-header">
@@ -86,8 +92,8 @@ function App() {
             <SwitchInput state={showTypes} callback={setShowTypes} label="Types"/>
           </div>
           <div className="poke-sounds-cont">
-            <SwitchInput state={playSounds} callback={setPlaySounds} label="Sounds" />
-            <SoundSlider state={soundVolume} callback={setSoundVolume} />
+            <SwitchInput state={playSounds} callback={toggleSoundState} label="Sounds" />
+            <SoundSlider state={soundVolume} callback={setSoundVolume} disabled={!playSounds} />
           </div>
         </div>
       </div>

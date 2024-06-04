@@ -19,7 +19,7 @@ function ListItem({ pokemon, showTypes, playSounds, soundVolume }) {
 
   useEffect(() => {
     if (audioPlayer && audioPlayer.audioEl.current) {
-      audioPlayer.audioEl.current.volume = soundVolume;
+      audioPlayer.audioEl.current.volume = playSounds ? soundVolume : 0;
     }
   });
 
@@ -35,7 +35,7 @@ function ListItem({ pokemon, showTypes, playSounds, soundVolume }) {
       
       <div className='list-item-label'>{pokemon.species.name}</div>
 
-      { playSounds ? <ReactAudioPlayer src={pokemon.cries.latest} ref={(player) => setAudioPlayer(player)}/> : null }
+      <ReactAudioPlayer src={pokemon.cries.latest} ref={(player) => setAudioPlayer(player)}/>
     </li>
   );
 }
