@@ -1,20 +1,20 @@
-import './PokeTypeSwitch.scss';
+import './SwitchInput.scss';
 
-function PokeTypeSwitch({ showTypes, setShowTypes }) {
+function SwitchInput({ state, callback, label }) {
 
-  function toggleShowTypes() {
-    setShowTypes(!showTypes);
+  function toggleState() {
+    callback(!state);
   }
 
   return (
     <div className="poke-type-switch">
       <div className="poke-type-label">
-        {showTypes ? 'Hide' : 'Show'} Types
+        {label}: {state ? 'On' : 'Off'}
       </div>
       
       <div className="switch-cont">
         <label className="switch">
-          <input type="checkbox" onClick={toggleShowTypes}/>
+          <input type="checkbox" onClick={toggleState} defaultChecked={state}/>
           <span className="slider"></span>
         </label>
       </div>
@@ -23,4 +23,4 @@ function PokeTypeSwitch({ showTypes, setShowTypes }) {
   )
 }
 
-export default PokeTypeSwitch;
+export default SwitchInput;

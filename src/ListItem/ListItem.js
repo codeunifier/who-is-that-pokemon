@@ -1,11 +1,11 @@
 import ReactAudioPlayer from 'react-audio-player';
 import './ListItem.scss';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import redXOverlay from '../assets/images/red-x-overlay.png';
 import PokeType from '../PokeType/PokeType';
 
-function ListItem({ pokemon, showTypes }) {
+function ListItem({ pokemon, showTypes, playSounds, soundVolume }) {
   const [audioPlayer, setAudioPlayer] = useState(null);
   const [selected, setSelected] = useState(false);
 
@@ -16,6 +16,12 @@ function ListItem({ pokemon, showTypes }) {
 
     setSelected(!selected);
   };
+
+  useEffect(() => {
+    if (audioPlayer && audioPlayer.audioEl.current) {
+      audioPlayer.audioEl.current.volume = soundVolume;
+    }
+  });
 
   return (
     <li className='list-item'>
@@ -29,7 +35,7 @@ function ListItem({ pokemon, showTypes }) {
       
       <div className='list-item-label'>{pokemon.species.name}</div>
 
-      <ReactAudioPlayer src={pokemon.cries.latest} ref={(player) => setAudioPlayer(player)}/>
+      { playSounds ? <ReactAudioPlayer src={pokemon.cries.latest} ref={(player) => setAudioPlayer(player)}/> : null }
     </li>
   );
 }

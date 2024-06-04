@@ -7,8 +7,9 @@ import { fetchRandomPokemon } from './services/pokemon.service';
 import ListItem from './ListItem/ListItem';
 
 import React from 'react';
-import PokeTypeSwitch from './PokeTypeSwitch/PokeTypeSwitch';
+import SwitchInput from './SwitchInput/SwitchInput';
 import NumToFetchForm from './NumToFetchForm/NumToFetchForm';
+import SoundSlider from './SoundSlider/SoundSlider';
 
 const DEFAULT_LOADING_TIME = 2000;
 const DEFAULT_POKEMON_TO_FETCH = 24;
@@ -20,6 +21,8 @@ function App() {
   const [paused, setPaused] = useState(true);
   const [showTypes, setShowTypes] = useState(false);
   const [numPerRow, setNumPerRow] = useState(6);
+  const [playSounds, setPlaySounds] = useState(true);
+  const [soundVolume, setSoundVolume] = useState(.3);
 
   function calculateNumPerRow(numToFetch) {
     // calculate the number of pokemon per row to evenly space out the number of pokemon fetched
@@ -72,7 +75,7 @@ function App() {
         <div className="poke-cont">
           { error ? <div>{ error.message }</div> : null}
           <ul className={"list row-" + numPerRow}>
-              { list.map((pokemon) => <ListItem key={pokemon.id} pokemon={pokemon} showTypes={showTypes}/>) }
+              { list.map((pokemon) => <ListItem key={pokemon.id} pokemon={pokemon} showTypes={showTypes} playSounds={playSounds} soundVolume={soundVolume}/>) }
             </ul>
         </div>
         <div className="settings-cont">
@@ -80,7 +83,11 @@ function App() {
             <NumToFetchForm numToFetch={DEFAULT_POKEMON_TO_FETCH} onSubmit={fetchPokemon}/>
           </div>
           <div className="poke-type-cont">
-            <PokeTypeSwitch showTypes={showTypes} setShowTypes={setShowTypes} />
+            <SwitchInput state={showTypes} callback={setShowTypes} label="Types"/>
+          </div>
+          <div className="poke-sounds-cont">
+            <SwitchInput state={playSounds} callback={setPlaySounds} label="Sounds" />
+            <SoundSlider state={soundVolume} callback={setSoundVolume} />
           </div>
         </div>
       </div>
