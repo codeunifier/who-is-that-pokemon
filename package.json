@@ -12,7 +12,6 @@
     "react-audio-player": "^0.17.0",
     "react-dom": "^18.3.1",
     "react-hook-form": "^7.51.5",
-    "react-route": "^1.0.3",
     "react-scripts": "^5.0.1",
     "sass": "^1.77.2",
     "web-vitals": "^2.1.4"
