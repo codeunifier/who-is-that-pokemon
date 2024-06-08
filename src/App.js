@@ -7,23 +7,26 @@ import { fetchRandomPokemon } from './services/pokemon.service';
 import ListItem from './ListItem/ListItem';
 
 import React from 'react';
-import SwitchInput from './SwitchInput/SwitchInput';
-import NumToFetchForm from './NumToFetchForm/NumToFetchForm';
-import SoundSlider from './SoundSlider/SoundSlider';
+
+import SettingsButton from './SettingsButton/SettingsButton';
 
 const DEFAULT_LOADING_TIME = 2000;
-const DEFAULT_POKEMON_TO_FETCH = 24;
+const DEFAULT_POKEMON_TO_FETCH = 12;
 const DEFAULT_SOUND_VOLUME = .3;
+const DEFAULT_SETTINGS_CONFIG = {
+  numToFetch: DEFAULT_POKEMON_TO_FETCH,
+  showTypes: false,
+  playSounds: true,
+  soundVolume: DEFAULT_SOUND_VOLUME,
+};
 
 function App() {
   const [list, setList] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [paused, setPaused] = useState(true);
-  const [showTypes, setShowTypes] = useState(false);
   const [numPerRow, setNumPerRow] = useState(6);
-  const [playSounds, setPlaySounds] = useState(true);
-  const [soundVolume, setSoundVolume] = useState(DEFAULT_SOUND_VOLUME);
+  const [settingsConfig, setSettingsConfig] = useState(DEFAULT_SETTINGS_CONFIG);
 
   function calculateNumPerRow(numToFetch) {
     // calculate the number of pokemon per row to evenly space out the number of pokemon fetched
@@ -42,7 +45,7 @@ function App() {
     }
   }
   
-  const fetchPokemon = useCallback(async (numToFetch = DEFAULT_POKEMON_TO_FETCH) => {
+  const fetchPokemon = useCallback(async (numToFetch) => {
     fetchRandomPokemon(numToFetch).then((pokemon) => {
       calculateNumPerRow(numToFetch);
       setLoading(false);
@@ -60,19 +63,25 @@ function App() {
 
     if (list.length === 0) {
       setLoading(true);
-      fetchPokemon();
+      fetchPokemon(settingsConfig.numToFetch);
     }
-  }, [list, fetchPokemon]);
+  }, [list, fetchPokemon, settingsConfig]);
 
-  const toggleSoundState = (state) => {
-    setPlaySounds(state);
-    setSoundVolume(state ? DEFAULT_SOUND_VOLUME : 0);
-  };
+  const handleSettingsChange = (newSettingsConfig) => {
+    setSettingsConfig(newSettingsConfig);
+
+    if (settingsConfig.numToFetch !== newSettingsConfig.numToFetch) {
+      fetchPokemon(newSettingsConfig.numToFetch);
+    }
+  }
 
   return (
     <div className="App no-box-shadow">
       <div className="App-header">
-        Who's That Pokemon?
+        <div className="title">
+          Who's That Pokemon?
+        </div>
+        <SettingsButton showSettings={loading || paused} settingsConfig={settingsConfig} setSettingsCallback={handleSettingsChange}/>
       </div>
       { loading || paused ? <img src={logo} className="App-logo" alt="logo" /> : null }
       <div className={
@@ -81,20 +90,8 @@ function App() {
         <div className="poke-cont">
           { error ? <div>{ error.message }</div> : null}
           <ul className={"list row-" + numPerRow}>
-              { list.map((pokemon) => <ListItem key={pokemon.id} pokemon={pokemon} showTypes={showTypes} playSounds={playSounds} soundVolume={soundVolume}/>) }
+              { list.map((pokemon) => <ListItem key={pokemon.id} pokemon={pokemon} settingsConfig={settingsConfig} />) }
             </ul>
-        </div>
-        <div className="settings-cont">
-          <div className="num-fetch-cont">
-            <NumToFetchForm numToFetch={DEFAULT_POKEMON_TO_FETCH} onSubmit={fetchPokemon}/>
-          </div>
-          <div className="poke-type-cont">
-            <SwitchInput state={showTypes} callback={setShowTypes} label="Types"/>
-          </div>
-          <div className="poke-sounds-cont">
-            <SwitchInput state={playSounds} callback={toggleSoundState} label="Sounds" />
-            <SoundSlider state={soundVolume} callback={setSoundVolume} disabled={!playSounds} />
-          </div>
         </div>
       </div>
     </div>

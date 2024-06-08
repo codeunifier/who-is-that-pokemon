@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react';
 import redXOverlay from '../assets/images/red-x-overlay.png';
 import PokeType from '../PokeType/PokeType';
 
-function ListItem({ pokemon, showTypes, playSounds, soundVolume }) {
+function ListItem({ pokemon, settingsConfig }) {
   const [audioPlayer, setAudioPlayer] = useState(null);
   const [selected, setSelected] = useState(false);
 
@@ -19,7 +19,7 @@ function ListItem({ pokemon, showTypes, playSounds, soundVolume }) {
 
   useEffect(() => {
     if (audioPlayer && audioPlayer.audioEl.current) {
-      audioPlayer.audioEl.current.volume = playSounds ? soundVolume : 0;
+      audioPlayer.audioEl.current.volume = settingsConfig.playSounds ? settingsConfig.soundVolume : 0;
     }
   });
 
@@ -28,7 +28,7 @@ function ListItem({ pokemon, showTypes, playSounds, soundVolume }) {
       <button onClick={handleClick} className={selected ? 'selected poke-btn' : 'poke-btn'}>
         <img src={redXOverlay} className='item-img cross-overlay' alt='overlay' />
         <img src={pokemon.sprites.front_default} className="item-img" alt={pokemon.species.name} />
-        { showTypes ? <div className="types-cont">
+        { settingsConfig.showTypes ? <div className="types-cont">
           {pokemon.types.map((type) => <PokeType key={type.slot} type={type} />)}
         </div> : null }
       </button>
